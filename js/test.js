@@ -1,14 +1,15 @@
-const regexp = "[a-z]+|0|FALSE|1|TRUE|&|\\||->|<->|>-<|~|\\(|\\)"
+import {scan} from "./scanner.js";
+import {tokenize} from "./tokenize.js";
 
-function getTokens(expression){
+window.onload = test;
 
-    regexObject = new RegExp(regexp, "gm");
-    return expression.match(regexObject);
-}
+export function test(){
 
-function test(){
+    console.log("START");
+    let tokens = tokenize("(p|q) <-> (q&r) & ~(a>-<b)")
+    document.getElementById("test").innerHTML = tokens;
+    console.log(tokens);
+    let results = scan(tokens);
 
-    console.log(getTokens("(p|q) <-> (q&r) & ~(a>-<b)"));
-    document.getElementById("test").innerHTML = getTokens("(p|q) <-> (q&r) & ~(a>-<b)");
-
+    if (results.leftBrackets !== results.rightBrackets) alert("Brackets don't match!")
 }
